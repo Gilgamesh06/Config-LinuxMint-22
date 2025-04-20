@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=IntelliJ IDEA
+Type=Application
+Exec=/opt/idea/bin/idea.sh
+Terminal=false
+Icon=/opt/idea/bin/idea.png
+Comment=Integrated Development Environment
+NoDisplay=false
+Categories=Development;IDE;
+Name[en]=IntelliJ IDEA
+X-Desktop-File-Install-Version=0.22
