@@ -6,6 +6,7 @@ sudo chmod +x cli-tools.sh
 sudo chmod +x apps.sh
 sudo chmod +x apps-flatpak.sh
 sudo chmod +x theme.sh
+sudo chmod +x remove.sh
 
 # Preguntar al usuario si desea instalar aplicaciones flatpak
 read -p "¿Desea instalar apps flatpak ? (s/n): " respuesta_flatpak
@@ -35,8 +36,15 @@ else
     echo "La instalación de apps ha sido cancelada."
 fi
 
-directorio_actual=$(pwd)
 
+# Para eliminar aplicaciones del sistema
+read -p "¿Desea eliminar  aplicaciones del sistema ? (s/n): " respuesta_eliminar
+
+if [[ "$respuesta_eliminar" == "s" ]]; then
+    ./remove.sh
+else
+    echo "La eliminacion de aplicaciones ha sido cancelada."
+fi
 
 
 # Para Instalar Thema
@@ -47,3 +55,11 @@ if [[ "$respuesta_theme" == "s" ]]; then
 else
     echo "La instalación del tema ha sido cancelada."
 fi
+
+cd ..
+
+echo "Limpiando sistema"
+
+rm -r Config-LinuxMint-22
+
+echo "Script finalizado"

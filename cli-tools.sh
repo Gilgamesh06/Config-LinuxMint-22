@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sudo apt update
 
 # Para instalar Git
 read -p "¿Desea instalar Git? (s/n): " respuesta_git
@@ -37,16 +38,29 @@ else
     echo "La instalación de wget ha sido cancelada."
 if
 
-# Para instalar wget
+# Para instalar htop
 read -p "¿Desea instalar htop? (s/n): " respuesta_htop
 
-if [[ "$respuesta_wget" == "s" ]]; then
+if [[ "$respuesta_htop" == "s" ]]; then
     
     # Instalar htop
     sudo apt install -y htop 
     echo "La instalación de htop se ha completado."
 else
     echo "La instalación de htop ha sido cancelada."
+if
+
+
+# Para instalar nala
+read -p "¿Desea instalar nala? (s/n): " respuesta_nala
+
+if [[ "$respuesta_nala" == "s" ]]; then
+    
+    # Instalar nala
+    sudo apt install -y nala 
+    echo "La instalación de nala se ha completado."
+else
+    echo "La instalación de nala ha sido cancelada."
 if
 
 # Preguntar al usuario si desea instalar Zsh y Oh My Zsh

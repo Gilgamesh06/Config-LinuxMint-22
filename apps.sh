@@ -277,3 +277,46 @@ if [[ "$respuesta_dropbox" == "s" ]]; then
 else
     echo "La instalación de Dropbox ha sido cancelada."
 fi
+
+# Instalar Docker
+echo "¿Quieres instalar Docker? (s/n)"
+read respuesta_docker
+if [[ "$respuesta_docker" == "s" || "$respuesta_docker" == "S" ]]; then
+    sudo apt install -y docker.io
+    echo "Docker ha sido instalado."
+else
+    echo "Docker no ha sido instalado."
+fi
+
+# Instalar Docker Compose
+echo "¿Quieres instalar Docker Compose? (s/n)"
+read respuesta_compose
+if [[ "$respuesta_compose" == "s" || "$respuesta_compose" == "S" ]]; then
+    sudo apt install -y docker-compose
+    echo "Docker Compose ha sido instalado."
+else
+    echo "Docker Compose no ha sido instalado."
+fi
+
+# Actualizar la lista de paquetes
+echo "Actualizando la lista de paquetes..."
+sudo apt update
+
+# Instalar kubectl
+echo "Instalando kubectl..."
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+echo "Verificando la integridad de kubectl..."
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+echo "Instalando kubectl..."
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+rm kubectl kubectl.sha256
+echo "kubectl ha sido instalado."
+
+# Instalar Minikube
+echo "Instalando Minikube..."
+curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+rm minikube-linux-amd64
+echo "Minikube ha sido instalado."
+
+echo "Proceso completado."
