@@ -1,19 +1,5 @@
 #!/bin/bash
 
-sudo apt update
-
-# Para instalar Git
-read -p "¿Desea instalar Git? (s/n): " respuesta_git
-
-if [[ "$respuesta_git" == "s" ]]; then
-    
-      # Instalar git, htop y curl
-    sudo apt install -y git 
-    echo "La instalación de git se ha completado."
-else
-    echo "La instalación de git ha sido cancelada."
-if
-
 # Para instalar curl
 read -p "¿Desea instalar Curl? (s/n): " respuesta_curl
 

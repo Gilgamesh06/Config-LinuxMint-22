@@ -11,6 +11,7 @@
     * Dar permisos al script
 
     ```bash
+        cd Config-LinuxMint-22
         sudo chmod +x init.sh 
     ```
     * Ejecutar el script

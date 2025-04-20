@@ -20,7 +20,7 @@ fi
 
 # Preguntar al usuario si desea instalar herramientas básicas
 read -p "¿Desea instalar herramientas básicas ? (s/n): " respuesta_basicas
-
+sudo apt update
 if [[ "$respuesta_basicas" == "s" ]]; then
     ./cli-tools.sh
 else
@@ -29,7 +29,7 @@ fi
 
 # Para Instalar apps
 read -p "¿Desea instalar apps ? (s/n): " respuesta_apps
-
+sudo apt update
 if [[ "$respuesta_apps" == "s" ]]; then
     ./apps.sh
 else
@@ -54,12 +54,10 @@ if [[ "$respuesta_theme" == "s" ]]; then
     ./theme.sh
 else
     echo "La instalación del tema ha sido cancelada."
-fi
-
-cd ..
+fi.
 
 echo "Limpiando sistema"
 
-rm -r Config-LinuxMint-22
+rm -r .
 
 echo "Script finalizado"

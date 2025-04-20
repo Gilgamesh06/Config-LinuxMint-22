@@ -298,25 +298,64 @@ else
     echo "Docker Compose no ha sido instalado."
 fi
 
+
+# Instalar Docker Compose
+echo "¿Quieres instalar Docker Compose? (s/n)"
+read respuesta_kube
+if [[ "$respuesta_kube" == "s" || "$respuesta_kube" == "S" ]]; then
+    # Actualizar la lista de paquetes
+    echo "Actualizando la lista de paquetes..."
+    sudo apt update
+
+    # Instalar kubectl
+    echo "Instalando kubectl..."
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    echo "Verificando la integridad de kubectl..."
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+    echo "Instalando kubectl..."
+    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    rm kubectl kubectl.sha256
+    echo "kubectl ha sido instalado."
+
+    # Instalar Minikube
+    echo "Instalando Minikube..."
+    curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+    sudo install minikube-linux-amd64 /usr/local/bin/minikube
+    rm minikube-linux-amd64
+    echo "Minikube ha sido instalado."
+fi
+
+
+# Instalar Plank
+echo "¿Quieres instalar Plank? (s/n)"
+read respuesta
+if [[ "$respuesta" == "s" || "$respuesta" == "S" ]]; then
+    sudo apt install -y plank
+    echo "Plank ha sido instalado."
+else
+    echo "Plank no ha sido instalado."
+fi
+
+
+#!/bin/bash
+
 # Actualizar la lista de paquetes
 echo "Actualizando la lista de paquetes..."
 sudo apt update
 
-# Instalar kubectl
-echo "Instalando kubectl..."
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-echo "Verificando la integridad de kubectl..."
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-echo "Instalando kubectl..."
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-rm kubectl kubectl.sha256
-echo "kubectl ha sido instalado."
+# Instalar R
+echo "Instalando R..."
+sudo apt install -y r-base
+echo "R ha sido instalado."
 
-# Instalar Minikube
-echo "Instalando Minikube..."
-curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
-sudo install minikube-linux-amd64 /usr/local/bin/minikube
-rm minikube-linux-amd64
-echo "Minikube ha sido instalado."
+# Descargar e instalar RStudio
+echo "Descargando RStudio..."
+curl -LO https://download1.rstudio.org/electron/jammy/amd64/rstudio-2024.12.1-563-amd64.deb
+
+# Instalar RStudio
+echo "Instalando RStudio..."
+sudo apt install -y ./rstudio-2024.12.1-563-amd64.deb
+
+echo "RStudio ha sido instalado."
 
 echo "Proceso completado."
