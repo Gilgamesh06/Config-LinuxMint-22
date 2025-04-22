@@ -42,4 +42,9 @@ instalar_aplicacion "Gitnuro" "flatpak install flathub com.jetpackduba.Gitnuro -
 # Instalar Telegram
 instalar_aplicacion "Telegram" "flatpak install flathub org.telegram.desktop -y"
 
+# Instalar Telegram
+instalar_aplicacion "Planify" "flatpak install flathub io.github.alainm23.planify -y"
+
+instalar_aplicacion "Bruno" "flatpak install flathub com.usebruno.Bruno -y"
+
 echo "La instalación de las aplicaciones Flatpak ha finalizado."

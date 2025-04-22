@@ -19,3 +19,10 @@
     ```bash
         ./init.sh
     ```
+
+    * Eliminar 
+
+    ```bash
+        cd ..
+        rm -rf Config-LinuxMint-22
+    ```

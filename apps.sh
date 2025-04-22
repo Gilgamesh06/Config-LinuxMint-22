@@ -1,30 +1,5 @@
 #!/bin/bash
 
-# Preguntar al usuario si desea instalar el paquete bruno
-read -p "¿Desea instalar el paquete 'bruno'? (s/n): " respuesta_bruno
-
-if [[ "$respuesta_bruno" == "s" ]]; then
-    echo "Agregando el keyring y el repositorio para 'bruno'..."
-
-    # Crear el directorio para el keyring
-    sudo mkdir -p /etc/apt/keyrings 
-
-    # Agregar la clave GPG
-    sudo gpg --no-default-keyring --keyring /etc/apt/keyrings/bruno.gpg --keyserver keyserver.ubuntu.com --recv-keys 9FA6017ECABE0266 
-
-    # Agregar el repositorio
-    echo "deb [signed-by=/etc/apt/keyrings/bruno.gpg] http://debian.usebruno.com/ bruno stable" | sudo tee /etc/apt/sources.list.d/bruno.list 
-
-    # Actualizar la lista de paquetes
-    sudo apt update 
-
-    # Instalar el paquete bruno
-    sudo apt install -y bruno 
-
-    echo "La instalación de 'bruno' se ha completado."
-else
-    echo "La instalación de 'bruno' ha sido cancelada."
-fi
 
 # Preguntar al usuario si desea instalar Google Chrome
 read -p "¿Desea instalar Google Chrome? (s/n): " respuesta_chrome
@@ -52,16 +27,16 @@ read -p "¿Desea instalar Visual Studio Code? (s/n): " respuesta_vscode
 if [[ "$respuesta_vscode" == "s" ]]; then
     echo "Descargando e instalando Visual Studio Code..."
 
-    # Descargar el paquete .deb de Visual Studio Code
-    curl -LO https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
-
-    # Instalar Visual Studio Code
-    sudo dpkg -i code_*.deb
-
-    # Resolver dependencias si es necesario
-    sudo apt-get install -f
-
+    sudo apt-get install wget gpg
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+    sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+    echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+    rm -f packages.microsoft.gpg
     echo "La instalación de Visual Studio Code se ha completado."
+    sudo apt install apt-transport-https
+    sudo apt update
+    sudo apt install code # or code-insiders
+
 else
     echo "La instalación de Visual Studio Code ha sido cancelada."
 fi
@@ -84,18 +59,6 @@ if [[ "$respuesta_dbeaver" == "s" ]]; then
     echo "La instalación de DBeaver se ha completado."
 else
     echo "La instalación de DBeaver ha sido cancelada."
-fi
-
-# Preguntar al usuario si desea instalar Zed
-read -p "¿Desea instalar Zed? (s/n): " respuesta_zed
-
-if [[ "$respuesta_zed" == "s" ]]; then
-    echo "Instalando Zed..."
-
-    # Ejecutar el script de instalación de Zed
-    curl -f https://zed.dev/install.sh
-else
-    echo "La instalación de zed ha sido cancelada."
 fi
 
 # Preguntar al usuario si desea instalar Zed
@@ -129,7 +92,7 @@ if [[ "$respuesta_flastfetch" == "s" ]]; then
     echo "Instalando flastfetch..."
 
     # Descargar el paquete .deb de fastfetch
-    curl -LO https://github.com/fastfetch-cli/fastfetch-cli/fastfetch/releases/download/2.41.0/fastfetch-linux-amd64.deb
+    curl -LO https://github.com/fastfetch-cli/fastfetch/releases/download/2.41.0/fastfetch-linux-amd64.deb
 
     # Instalar fastfetch
     sudo dpkg -i fastfetch-linux-amd64.deb
@@ -163,13 +126,7 @@ read -p "¿Desea instalar postgreSQL? (s/n): " respuesta_postgresql
 if [[ "$respuesta_postgresql" == "s" ]]; then
     echo "Instalando postgreSQL..."
 
-    # Ejecutar el script de instalación de mongodb
-    sudo apt update
-    sudo apt install -y wget ca-certificates gnupg
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-    echo "deb [arch=$(dpkg --print-architecture)] http://apt.postgresql.org/pub/repos/apt jammy-pgdg main" | sudo tee /etc/apt/sources.list.d/postgresql.list
-    sudo apt update
-    sudo apt install postgresql postgresql-contrib
+    sudo apt install postgresql
 else
     echo "La instalación de postgresql ha sido cancelada."
 fi
@@ -221,17 +178,17 @@ if [[ "$respuesta_intellij" == "s" ]]; then
     echo "Descargando e instalando IntelliJ IDEA..."
 
     # Descargar el archivo comprimido de IntelliJ IDEA
-    curl -LO https://www.jetbrains.com/idea/download/download-thanks.html?platform=linux
-
+    curl -LO https://download.jetbrains.com/idea/ideaIC-2025.1.tar.gz?_gl=1*1pubtip*_ga*MTgxNjY3NzEzOC4xNzQ1MTk0NTcz*_ga_9J976DJZ68*MTc0NTE5NDU3Mi4xLjEuMTc0NTE5NTg2OS4wLjAuMA..
+    
     # Descomprimir el archivo
-    tar -xzf ideaIC*
+    tar -xzf ideaIC*.gz
 
-    # Cambiar el nombre del directorio a 'idea'
+    #Cambiar el nombre del directorio a 'idea'
     mv idea-IC-* idea
 
-    # Mover el directorio a /opt
+    Mover el directorio a /opt
     sudo mv idea /opt/
-    sudo mv idea.desktop ~/usr/share/applications
+    sudo cp idea.desktop /usr/share/applications
 
     echo "La instalación de IntelliJ IDEA se ha completado."
 else
@@ -245,7 +202,9 @@ if [[ "$respuesta_warp" == "s" ]]; then
     echo "Descargando e instalando Warp..."
 
     # Descargar el paquete .deb de Warp
-    curl -LO https://app.warp.dev/get_warp?package=deb -o warp.deb
+    curl -LO https://app.warp.dev/download?package=deb
+
+    mv download warp.deb
 
     # Instalar Warp
     sudo dpkg -i warp.deb
@@ -265,10 +224,10 @@ if [[ "$respuesta_dropbox" == "s" ]]; then
     echo "Descargando e instalando Dropbox..."
 
     # Descargar el paquete .deb de Dropbox
-    curl -LO https://www.dropbox.com/download?plat=lnx.x86_64 -o dropbox.deb
-
+    curl -LO https://linux.dropboxstatic.com/packages/ubuntu/dropbox_2024.04.17_amd64.deb
+    
     # Instalar Dropbox
-    sudo dpkg -i dropbox.deb
+    sudo dpkg -i dropbox*.deb
 
     # Resolver dependencias si es necesario
     sudo apt-get install -f
@@ -292,7 +251,7 @@ fi
 echo "¿Quieres instalar Docker Compose? (s/n)"
 read respuesta_compose
 if [[ "$respuesta_compose" == "s" || "$respuesta_compose" == "S" ]]; then
-    sudo apt install -y docker-compose
+    sudo apt install -y docker-compose-v2
     echo "Docker Compose ha sido instalado."
 else
     echo "Docker Compose no ha sido instalado."
@@ -300,7 +259,7 @@ fi
 
 
 # Instalar Docker Compose
-echo "¿Quieres instalar Docker Compose? (s/n)"
+echo "¿Quieres instalar Docker Kubernetes? (s/n)"
 read respuesta_kube
 if [[ "$respuesta_kube" == "s" || "$respuesta_kube" == "S" ]]; then
     # Actualizar la lista de paquetes
@@ -314,15 +273,15 @@ if [[ "$respuesta_kube" == "s" || "$respuesta_kube" == "S" ]]; then
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
     echo "Instalando kubectl..."
     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-    rm kubectl kubectl.sha256
     echo "kubectl ha sido instalado."
 
     # Instalar Minikube
     echo "Instalando Minikube..."
     curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
     sudo install minikube-linux-amd64 /usr/local/bin/minikube
-    rm minikube-linux-amd64
     echo "Minikube ha sido instalado."
+else
+    echo "Kubernetes no ha sido instalado."
 fi
 
 
@@ -337,25 +296,64 @@ else
 fi
 
 
-#!/bin/bash
+# Instalar kitty
+echo "¿Quieres instalar kitty? (s/n)"
+read respuesta_kitty
+if [[ "$respuesta_kitty" == "s" || "$respuesta_kitty" == "S" ]]; then
+    sudo apt install -y kitty
+    echo "kitty ha sido instalado."
+else
+    echo "kitty no ha sido instalado."
+fi
 
-# Actualizar la lista de paquetes
-echo "Actualizando la lista de paquetes..."
-sudo apt update
-
-# Instalar R
-echo "Instalando R..."
-sudo apt install -y r-base
-echo "R ha sido instalado."
-
-# Descargar e instalar RStudio
-echo "Descargando RStudio..."
-curl -LO https://download1.rstudio.org/electron/jammy/amd64/rstudio-2024.12.1-563-amd64.deb
 
 # Instalar RStudio
-echo "Instalando RStudio..."
-sudo apt install -y ./rstudio-2024.12.1-563-amd64.deb
+echo "¿Quieres instalar RStudio? (s/n)"
+read respuesta_rstudio
+if [[ "$respuesta_rstudio" == "s" || "$respuesta_rstudio" == "S" ]]; then
+    # Actualizar la lista de paquetes
+    echo "Actualizando la lista de paquetes..."
+    sudo apt update
 
-echo "RStudio ha sido instalado."
+    # Instalar R
+    echo "Instalando R..."
+    sudo apt install -y r-base
+    echo "R ha sido instalado."
 
-echo "Proceso completado."
+    # Descargar e instalar RStudio
+    echo "Descargando RStudio..."
+    curl -LO https://download1.rstudio.org/electron/jammy/amd64/rstudio-2024.12.1-563-amd64.deb
+
+    # Instalar RStudio
+    echo "Instalando RStudio..."
+    sudo apt install -y ./rstudio-2024.12.1-563-amd64.deb
+
+    echo "RStudio ha sido instalado."
+else
+    echo "RStudio no ha sido instalado."
+fi
+
+# Preguntar al usuario si desea instalar Zsh y Oh My Zsh
+read -p "¿Desea instalar Zsh y Oh My Zsh? (s/n): " respuesta_zsh
+
+if [[ "$respuesta_zsh" == "s" ]]; then
+    echo "Instalando Zsh..."
+
+    # Instalar Zsh
+    sudo apt update
+    sudo apt install -y zsh
+
+    # Cambiar el shell predeterminado a Zsh
+    chsh -s $(which zsh)
+
+    echo "Zsh se ha instalado y se ha configurado como el shell predeterminado."
+
+    echo "Instalando Oh My Zsh..."
+
+    # Instalar Oh My Zsh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+    echo "La instalación de Oh My Zsh se ha completado."
+else
+    echo "La instalación de Zsh y Oh My Zsh ha sido cancelada."
+fi

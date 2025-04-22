@@ -20,8 +20,9 @@ fi
 
 # Preguntar al usuario si desea instalar herramientas básicas
 read -p "¿Desea instalar herramientas básicas ? (s/n): " respuesta_basicas
-sudo apt update
+
 if [[ "$respuesta_basicas" == "s" ]]; then
+    sudo apt update
     ./cli-tools.sh
 else
     echo "La instalación de herramientas básicas ha sido cancelada."
@@ -29,8 +30,9 @@ fi
 
 # Para Instalar apps
 read -p "¿Desea instalar apps ? (s/n): " respuesta_apps
-sudo apt update
+
 if [[ "$respuesta_apps" == "s" ]]; then
+    sudo apt update
     ./apps.sh
 else
     echo "La instalación de apps ha sido cancelada."
@@ -54,10 +56,6 @@ if [[ "$respuesta_theme" == "s" ]]; then
     ./theme.sh
 else
     echo "La instalación del tema ha sido cancelada."
-fi.
-
-echo "Limpiando sistema"
-
-rm -r .
+fi
 
 echo "Script finalizado"

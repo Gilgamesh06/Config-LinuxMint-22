@@ -1,17 +1,17 @@
 
 # Mover cursor al sistema
-sudo mv /Kitty ~/usr/share/icons
+sudo cp -rf Kitty/ /usr/share/icons/
 
 # Mover temas de iconos del sistema
-sudo mv /papirus-icons/ePapirus ~/usr/share/icons
-sudo mv /papirus-icons/ePapirus.Dark ~/usr/share/icons
-sudo mv /papirus-icons/Papirus ~/usr/share/icons
-sudo mv /papirus-icons/Papirus-Dark ~/usr/share/icons
-sudo mv /papirus-icons/Papirus-Light ~/usr/share/icons
+sudo cp -rf papirus-icons/ePapirus/ /usr/share/icons/
+sudo cp -rf papirus-icons/ePapirus-Dark/ /usr/share/icons/
+sudo cp -rf papirus-icons/Papirus/ /usr/share/icons/
+sudo cp -rf papirus-icons/Papirus-Dark/ /usr/share/icons/
+sudo cp -rf papirus-icons/Papirus-Light/ /usr/share/icons/
 
 # Mover temas del sistema
-sudo mv /Nortic-Polar/Nortic-Polar ~/usr/share/themes
-sudo mv /Nortic-Polar/Nortic-Polar-v40 ~/usr/share/themes
+sudo cp -rf Nordic-Polar/Nordic-Polar/ /usr/share/themes/
+sudo cp -rf Nordic-Polar/Nordic-Polar-v40/ /usr/share/themes/
 
 
 # Para Instalar apps
