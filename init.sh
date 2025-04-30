@@ -58,4 +58,31 @@ else
     echo "La instalación del tema ha sido cancelada."
 fi
 
+# Preguntar al usuario si desea instalar Zsh y Oh My Zsh
+read -p "¿Desea instalar Zsh y Oh My Zsh? (s/n): " respuesta_zsh
+
+if [[ "$respuesta_zsh" == "s" ]]; then
+    echo "Instalando Zsh..."
+
+    # Instalar Zsh
+    sudo apt update
+    sudo apt install -y zsh
+
+    # Cambiar el shell predeterminado a Zsh
+    chsh -s $(which zsh)
+
+    echo "Zsh se ha instalado y se ha configurado como el shell predeterminado."
+
+    echo "Instalando Oh My Zsh..."
+
+    # Instalar Oh My Zsh
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+    echo "La instalación de Oh My Zsh se ha completado."
+else
+    echo "La instalación de Zsh y Oh My Zsh ha sido cancelada."
+fi
+
+
+
 echo "Script finalizado"

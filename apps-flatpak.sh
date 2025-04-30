@@ -2,7 +2,28 @@
 
 # Script para instalar varias aplicaciones Flatpak con confirmación del usuario
 
+echo "Instalando flatpak"
+sudo apt install -y flatpak 
+
+echo "Instalando repositorio remoto"
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+read -p "¿Desea instalar plugin de flatpak a gnome-software? (s/n): " respuesta
+
+if [[ "$respuesta" == "s" ]]; then
+    echo "Instalando plugin"
+    sudo apt install -y gnome-software-plugin-flatpak
+
+    # Resolver dependencias si es necesario
+    sudo apt-get install -f
+
+    echo "La instalación de Google Chrome se ha completado."
+else
+    echo "La instalación de Google Chrome ha sido cancelada."
+fi
+
 echo "Iniciando la instalación de aplicaciones Flatpak..."
+
 
 # Función para instalar una aplicación con confirmación
 instalar_aplicacion() {
