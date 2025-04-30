@@ -13,13 +13,13 @@
     * Clonar repo
 
         ```bash
-            git clone https://github.com/Gilgamesh06/Config-Ubuntu-NobleNumbat.git
+            git clone https://github.com/Gilgamesh06/Config-Ubuntu-Numbat.git
         ```
 
     * Dar permisos al script
 
         ```bash
-            cd Config-Ubuntu-NobleNumbat
+            cd Config-Ubuntu-Numbat
             sudo chmod +x init.sh 
         ```
     * Ejecutar el script
@@ -32,7 +32,7 @@
 
         ```bash
             cd ..
-            rm -rf Config-Ubuntu-NobleNumbat
+            rm -rf Config-Ubuntu-Numbat
         ```
 
     ## Informacion 
