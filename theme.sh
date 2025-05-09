@@ -30,7 +30,7 @@ git clone https://github.com/vinceliuice/Orchis-theme.git
 echo "Dandole permissos al script"
 cd Orchis-theme
 sudo chmod +x install.sh
-./install.sh -c dark -s compact -l --tweaks solid primary macos submenu nord --round 3px --shell 46
+./install.sh -c standard -s compact -l --tweaks solid primary macos submenu nord --round 3px --shell 46
 sudo flatpak override --filesystem=xdg-config/gtk-3.0 && sudo flatpak override --filesystem=xdg-config/gtk-4.0
 
 # Para Instalar apps

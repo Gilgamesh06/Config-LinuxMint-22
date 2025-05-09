@@ -68,4 +68,7 @@ instalar_aplicacion "Planify" "flatpak install flathub io.github.alainm23.planif
 
 instalar_aplicacion "Bruno" "flatpak install flathub com.usebruno.Bruno -y"
 
+instalar_aplicacion "vnote" "flatpak install flathub fun.vnote.app.VNote -y"
+
+
 echo "La instalación de las aplicaciones Flatpak ha finalizado."
